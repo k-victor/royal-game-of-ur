@@ -1,5 +1,5 @@
 import {drop, take, curry, compose, concat} from 'ramda';
-
+//test
 // Utgå ifrån gameState (bådas med), turn, och typ moveValue?
 // utifrån ovan kan vi använda alla funktioner som behövs?
 

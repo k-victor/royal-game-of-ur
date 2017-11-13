@@ -18,7 +18,8 @@ export const multiply = (value1, value2) => value1 * value2;
 export const endSquare = () => createArrayFromValue(0);
 export const inverseValue = (value) => (value === 0 ? 1 : 0);
 export const inverse = (array) => array.map(inverseValue);
-export const multiplyArrays = curry((array1, array2) => zipWith(array1, array2, multiply));
+export const multiplyArrays = (array1, array2) => zipWith(array1, array2, multiply);
+export const multiplyWithArray = curry(multiplyArrays);
 export const addArrays = curry((array1, array2) => zipWith(array1, array2, add));
 export const subtractArrays = curry((array1, array2) => zipWith(array1, array2, subtract));
 export const createArrayFromValue = (value) => [value];
@@ -48,7 +49,7 @@ export const zipWith = (arr1, arr2, mappingFn) => {
 export const getNextTurn = (turn) => (isPlayer1Turn(turn) ? player2() : player1());
 export const nextTurn = (turn, currentPlayerBoardBeforeMove, currentPlayerBoardAfterMove) => (compose(
     sumUpBoard,
-    multiplyArrays(maskWithFlowers(currentPlayerBoardAfterMove)),
+    multiplyWithArray(maskWithFlowers(currentPlayerBoardAfterMove)),
     inverse
 )(currentPlayerBoardBeforeMove) > 0 ? turn : getNextTurn(turn));
 
@@ -58,7 +59,7 @@ export const calcAvailableMoves = (playerGameState, moveValue) => {
     const toArr = drop(moveValue, board);
 
     return compose(
-        multiplyArrays(fromArr),
+        multiplyWithArray(fromArr),
         inverse
     )(toArr);
 };
@@ -70,7 +71,7 @@ export const getAvailableMoves = (currentPlayer, otherPlayer, moveValue) => calc
 export const getMoveToVector = (moveFromVector, moveValue) => [0].concat(drop(moveFromVector.length - moveValue + 1, moveFromVector)).concat(take(moveFromVector.length - moveValue, moveFromVector));
 export const canMove = (moveFromVector, availableMoves) => compose(
     sumUpBoard,
-    multiplyArrays(availableMoves)
+    multiplyWithArray(availableMoves)
 )(moveFromVector) > 0;
 
 export const reverseConcat = curry((arr1, arr2) => concat(arr2, arr1));
@@ -80,7 +81,7 @@ export const takePiece = (currentPlayerBoard, otherPlayerBoard) => {
     // takeFromBoard(otherPlayersBoard)(currentPlayersSharedBoard)
     const otherPlayerBoardAfterTake = compose(
         // addArray [noTakes,0,0...]
-        multiplyArrays(otherPlayerBoard),
+        multiplyWithArray(otherPlayerBoard),
         inverse,
         maskWithSharedTiles
     )(currentPlayerBoard);

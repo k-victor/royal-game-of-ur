@@ -6,12 +6,17 @@
     "babel-eslint": "^8.0.2",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.1",
-    "eslint": "^4.10.0",
-    "eslint-config-google": "^0.9.1",
+    "eslint": "4.9.0",
+    "eslint-config-google": "0.7.0",
+    "eslint-plugin-babel": "3.3.0",
+    "eslint-plugin-fp": "2.2.0",
+    "eslint-plugin-jasmine": "2.1.0",
+    "eslint-plugin-json": "1.2.0",
     "ramda": "0.25.0",
     "webpack": "^3.0.0"
   },
   "scripts": {
-    "build": "webpack && eslint --fix . --ext .js *.js"
+    "build": "webpack && npm run-script lint:js",
+    "lint:js": "eslint '**/*.js' --max-warnings 5 --ext .json --ext .js --ignore-path .eslintignore --cache --fix"
   }
 }

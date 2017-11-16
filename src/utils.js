@@ -1,4 +1,4 @@
-import {drop, curry, concat} from 'ramda';
+import {drop, curry, concat, flip} from 'ramda';
 
 export const add = (value1, value2) => value1 + value2;
 export const addTo = curry(add);
@@ -10,14 +10,21 @@ export const multiplyArrays = (array1, array2) => zipWith(array1, array2, multip
 export const addArrays = (array1, array2) => zipWith(array1, array2, add);
 export const subtractArrays = (array1, array2) => zipWith(array1, array2, subtract);
 export const createArrayFromValue = (value) => [value];
-export const reverseConcat = curry((arr1, arr2) => concat(arr2, arr1));
-export const sumUpBoard = (array) => array.reduce((sum, value) => sum + value);
+export const flippedConcat = flip(concat);
+export const largerThanOneToOne = (value) => (value > 1 ? 1 : value);
+export const toNil = () => 0;
 
+// [a] -> [b] -> ((a, b) -> c) -> [c]
 export const zipWith = (arr1, arr2, mappingFn) => {
     if(arr1.length && arr2.length && mappingFn) {
         const arr1Value = arr1[0];
         const arr2Value = arr2[0];
-        return [mappingFn(arr1Value, arr2Value)].concat(zipWith(drop(1, arr1), drop(1, arr2), mappingFn));
+
+        return concat([mappingFn(arr1Value, arr2Value)], zipWith(drop(1, arr1), drop(1, arr2), mappingFn));
+    } else if(arr1.length) {
+        return arr1;
+    } else if(arr2.length) {
+        return arr2;
     } else {
         return [];
     }

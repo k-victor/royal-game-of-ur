@@ -1,7 +1,11 @@
-import {drop, take, compose} from 'ramda';
+import {drop, take, compose, curry} from 'ramda';
 import {nextTurn} from './turn-monad';
 import {takePieceAndPutBack, move} from './action-monad';
 import {getCurrentPlayerBoard, getOtherPlayerBoard, startingBoard, getMoveToVector, getAvailableMoves, sumUpBoard} from './board-monad';
+
+const log = curry((text, a) => {
+    console.log(text, a); return a;
+});
 
 export const playATurn = (boardPreMove, diceThrow, moveFromVector, turn) => {
     const currentPlayerPreMove = getCurrentPlayerBoard(turn, boardPreMove);
@@ -10,7 +14,9 @@ export const playATurn = (boardPreMove, diceThrow, moveFromVector, turn) => {
     const availableMoves = getAvailableMoves(currentPlayerPreMove, otherPlayerPreMove, diceThrow);
 
     const boardAfterTurn = compose(
+        log('after take'),
         takePieceAndPutBack(turn),
+        log('after move'),
         move(moveFromVector, moveToVector, availableMoves, turn)
     )(boardPreMove);
 
@@ -31,7 +37,7 @@ function* play(board, turn) {
     const move = yield;
     // Play the turn
     const boardAfterTurn = playATurn(board, diceThrow, move, turn);
-
+    console.log('Board after turn', boardAfterTurn);
     const currentPlayerAfterMove = getCurrentPlayerBoard(turn, boardAfterTurn);
     const nextPlayerToMove = nextTurn(turn, currentPlayerPreMove, currentPlayerAfterMove);
 

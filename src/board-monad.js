@@ -1,4 +1,4 @@
-import {drop, dropLast, take, curry, compose, concat, map} from 'ramda';
+import {drop, take, curry, compose, concat, map} from 'ramda';
 import {inverse, addArrays, subtractArrays, multiplyArrays, createArrayFromValue, flippedConcat, sumUpBoard, largerThanOneToOne, toNil} from './utils';
 import {isPlayer1Turn} from './turn-monad';
 
@@ -24,6 +24,10 @@ export const getMoveToVector = (moveFromVector, moveValue) => compose(
     concat(drop(moveFromVector.length - moveValue + 1, moveFromVector)),
     take(moveFromVector.length - moveValue)
 )(moveFromVector);
+console.log('MOVETOVEC', getMoveToVector(
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    2
+));
 
 // [a] -> Boolean
 export const boardIsEmpty = (board) => sumUpBoard(board) === 0;
@@ -63,3 +67,9 @@ export const startingBoard = () => [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 export const flowers = () => [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
 export const sharedTiles = () => [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0];
 export const endSquare = () => createArrayFromValue(0);
+
+console.log(getAvailableMoves(
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1],
+    2
+));

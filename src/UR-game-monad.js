@@ -3,9 +3,9 @@ import {nextTurn} from './turn-monad';
 import {takePieceAndPutBack, move} from './action-monad';
 import {getCurrentPlayerBoard, getOtherPlayerBoard, startingBoard, getMoveToVector, getAvailableMoves, sumUpBoard, addPiecesToBoard, emptyBoard} from './board-monad';
 
-const log = curry((text, a) => {
-    console.log(text, a); return a;
-});
+// Our only shared states!
+let currentAvailableMoves = [];
+let gameOver = false;
 
 export const playATurn = (boardPreMove, diceThrow, moveFromVector, turn) => {
     const currentPlayerPreMove = getCurrentPlayerBoard(turn, boardPreMove);
@@ -20,10 +20,6 @@ export const playATurn = (boardPreMove, diceThrow, moveFromVector, turn) => {
 
     return boardAfterTurn;
 };
-
-// Our only shared states!
-let currentAvailableMoves = [];
-let gameOver = false;
 
 function* play(board, turn) {
     const diceThrow = yield;

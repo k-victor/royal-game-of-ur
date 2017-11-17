@@ -46,14 +46,6 @@ function* play(board, turn) {
     }
 }
 
-const printState = (gameState, diceThrow, move, turn) => {
-    console.log('Player ', turn);
-    console.log('Moving', diceThrow, move);
-    console.log(take(gameState.length / 2, gameState));
-    console.log(drop(gameState.length / 2, gameState));
-    console.log('---------------------------------');
-};
-
 const throwDice = () => Math.round(Math.random()) + Math.round(Math.random()) + Math.round(Math.random()) + Math.round(Math.random());
 
 // Temporary and not very nice function to just pick a move from available ones. For testing purposes.
@@ -84,3 +76,11 @@ while(!gameOver) {
     playAGame.next(throwDice());
     playAGame.next(addPiecesToBoard(emptyBoard(), pickAMove(currentAvailableMoves)));
 }
+
+const printState = (gameState, diceThrow, move, turn) => {
+    console.log('Player ', turn);
+    console.log('Moving', diceThrow, move);
+    console.log(take(gameState.length / 2, gameState));
+    console.log(drop(gameState.length / 2, gameState));
+    console.log('---------------------------------');
+};

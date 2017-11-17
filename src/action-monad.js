@@ -2,6 +2,8 @@ import {curry, drop, compose, concat} from 'ramda';
 import {maskWithSharedTiles, sumUpBoard, addPiecesToBoard, removePiecesFromBoard, getCurrentPlayerBoard, getOtherPlayerBoard, mergeBoards, flippedMergeBoards, multiplyWithArray} from './board-monad';
 import {createArrayFromValue, addTo} from './utils';
 
+// All move vectors are assumed being the length of the board.
+
 // [a] -> [a] -> Boolean
 export const canMove = (moveFromVector, availableMoves) => compose(
     sumUpBoard,
@@ -52,17 +54,9 @@ export const move = curry((moveFromVector, moveToVector, availableMoves, turn, b
         return compose(
             mergeBoards(turn, otherPlayerBoard),
             addPiecesToBoard(moveToVector),
-            removePiecesFromBoard(currentPlayerBoard)
+            removePiecesFromBoard(currentPlayerBoard),
         )(moveFromVector);
     } else {
         return board;
     }
 });
-
-console.log(
-    move([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-        1,
-        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0].concat([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0]))
-);

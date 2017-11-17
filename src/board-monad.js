@@ -1,13 +1,15 @@
 import {drop, take, curry, compose, concat, map} from 'ramda';
-import {inverse, addArrays, subtractArrays, multiplyArrays, createArrayFromValue, flippedConcat, sumUpBoard, largerThanOneToOne, toNil} from './utils';
+import {inverse, addArrays, subtractArrays, multiplyArrays, createArrayFromValue, flippedConcat, sumUpBoard, largerThanOneToOne} from './utils';
 import {isPlayer1Turn} from './turn-monad';
+
+// All move vectors are assumed being the length of the board.
 
 // [a] -> [a] -> Int -> [a]
 export const getAvailableMoves = (currentPlayerBoard, otherPlayerBoard, moveValue) => {
     // +1 since we can move from that one to the last square.
     const fromVector = take(currentPlayerBoard.length - moveValue + 1, currentPlayerBoard);
 
-    return moveValue === 0 ? map(toNil, currentPlayerBoard) : compose(
+    return moveValue === 0 ? emptyBoard() : compose(
         map(largerThanOneToOne), // Map >1 values to 1 (you can only move one piece at a time)
         multiplyWithArray(fromVector), // Multiply the from vector with the inverse of the to vector. This way, only when from is 1 and to is 0 it's a valid move!
         inverse,
@@ -24,10 +26,6 @@ export const getMoveToVector = (moveFromVector, moveValue) => compose(
     concat(drop(moveFromVector.length - moveValue + 1, moveFromVector)),
     take(moveFromVector.length - moveValue)
 )(moveFromVector);
-console.log('MOVETOVEC', getMoveToVector(
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-    2
-));
 
 // [a] -> Boolean
 export const boardIsEmpty = (board) => sumUpBoard(board) === 0;
@@ -67,9 +65,4 @@ export const startingBoard = () => [7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
 export const flowers = () => [0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1];
 export const sharedTiles = () => [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0];
 export const endSquare = () => createArrayFromValue(0);
-
-console.log(getAvailableMoves(
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-    [0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1],
-    2
-));
+export const emptyBoard = () => [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

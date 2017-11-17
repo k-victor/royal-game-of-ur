@@ -12,7 +12,6 @@ export const subtractArrays = (array1, array2) => zipWith(array1, array2, subtra
 export const createArrayFromValue = (value) => [value];
 export const flippedConcat = flip(concat);
 export const largerThanOneToOne = (value) => (value > 1 ? 1 : value);
-export const toNil = () => 0;
 
 // [a] -> [b] -> ((a, b) -> c) -> [c]
 export const zipWith = (arr1, arr2, mappingFn) => {

@@ -15,6 +15,7 @@ export const getNextTurn = (turn, currentPlayerBoardAfterMove) => {
 };
 
 export const playerHasWon = (playerBoard) => boardIsEmpty(playerBoard);
+
 // Int -> [a] -> [a] -> Int
 // Checks if the player moved to a flower tile by masking the board after move with the flowers, and multiplying that with the inverse of the board before the move.
 // If the remaining array has a 1 in it, it means the player moved to a flower and should play again.

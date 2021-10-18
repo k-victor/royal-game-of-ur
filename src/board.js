@@ -1,6 +1,6 @@
 import {drop, take, curry, compose, concat, map} from 'ramda';
 import {inverse, addArrays, subtractArrays, multiplyArrays, createArrayFromValue, flippedConcat, sumUpBoard, largerThanOneToOne} from './utils';
-import {isPlayer1Turn} from './turn-monad';
+import {isPlayer1Turn} from './turn';
 
 // All move vectors are assumed being the length of the board.
 

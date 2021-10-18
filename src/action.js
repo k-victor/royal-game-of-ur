@@ -1,5 +1,5 @@
 import {curry, drop, compose, concat} from 'ramda';
-import {maskWithSharedTiles, sumUpBoard, addPiecesToBoard, removePiecesFromBoard, getCurrentPlayerBoard, getOtherPlayerBoard, mergeBoards, flippedMergeBoards, multiplyWithArray} from './board-monad';
+import {maskWithSharedTiles, sumUpBoard, addPiecesToBoard, removePiecesFromBoard, getCurrentPlayerBoard, getOtherPlayerBoard, mergeBoards, flippedMergeBoards, multiplyWithArray} from './board';
 import {createArrayFromValue, addTo} from './utils';
 
 // All move vectors are assumed being the length of the board.

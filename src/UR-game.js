@@ -1,7 +1,7 @@
 import {drop, take, compose, curry} from 'ramda';
-import {nextTurn} from './turn-monad';
-import {takePieceAndPutBack, move} from './action-monad';
-import {getCurrentPlayerBoard, getOtherPlayerBoard, startingBoard, getMoveToVector, getAvailableMoves, sumUpBoard, addPiecesToBoard, emptyBoard} from './board-monad';
+import {nextTurn} from './turn';
+import {takePieceAndPutBack, move} from './action';
+import {getCurrentPlayerBoard, getOtherPlayerBoard, startingBoard, getMoveToVector, getAvailableMoves, sumUpBoard, addPiecesToBoard, emptyBoard} from './board';
 
 // Our only shared states!
 let currentAvailableMoves = [];
@@ -63,7 +63,6 @@ const pickAMove = (availableMoves) => {
             } else {
                 return moveCell;
             }
-            return hasPicked && moveCell > 0 ? 0 : moveCell;
         }));
     }
 };

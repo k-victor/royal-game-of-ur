@@ -1,5 +1,5 @@
 import {compose} from 'ramda';
-import {sumUpBoard, maskWithFlowers, multiplyWithArray, boardIsEmpty} from './board-monad';
+import {sumUpBoard, maskWithFlowers, multiplyWithArray, boardIsEmpty} from './board';
 import {inverse} from './utils';
 
 export const player1 = () => 1;
